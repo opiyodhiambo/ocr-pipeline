@@ -1,9 +1,8 @@
-package com.adventure.ocrpipeline
+package com.adventure.ocrpipeline.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.stereotype.Service
 import java.io.File
-import java.util.*
 
 @Service
 class JsonDataService(private val objectMapper: ObjectMapper) {

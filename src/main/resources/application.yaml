@@ -1,0 +1,6 @@
+server:
+  port: 8080
+google:
+  cloud:
+    api:
+      endPointUrl: "https://us-documentai.googleapis.com/v1/projects/32694591112/locations/us/processors/858e10cb5834b53a:process"
