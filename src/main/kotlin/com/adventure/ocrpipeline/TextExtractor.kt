@@ -16,8 +16,11 @@ class TextExtractor(
 
     fun extractText() {
         val pdfFile = File("src/main/resources/data/A012203309Y.pdf")
-        fileContent =
-        // Read the content of the request.json file
+
+        // Encode and save the file
+        val mimeType = "application/pdf"
+        utils.encodeAndSaveFile(pdfFile, mimeType)
+        
 
         // Make the POST request
         val response = client.post()
