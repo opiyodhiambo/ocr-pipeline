@@ -21,7 +21,7 @@ class Utils(
             if (accessToken != null){
                 return accessToken.tokenValue
             } else{
-                println("Errror: Access token is null")
+                println("Error: Access token is null")
 
             }
 
