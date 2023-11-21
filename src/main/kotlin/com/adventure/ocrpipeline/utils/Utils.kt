@@ -1,5 +1,6 @@
-package com.adventure.ocrpipeline
+package com.adventure.ocrpipeline.utils
 
+import com.adventure.ocrpipeline.service.JsonDataService
 import org.springframework.stereotype.Component
 import java.io.File
 import java.util.*

@@ -1,7 +1,6 @@
-package com.adventure.ocrpipeline
+package com.adventure.ocrpipeline.service
 
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
+import com.adventure.ocrpipeline.utils.Utils
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
@@ -20,11 +19,13 @@ class TextExtractor(
         // Encode and save the file
         val mimeType = "application/pdf"
         utils.encodeAndSaveFile(pdfFile, mimeType)
-        
+
+        // Retrieve the content from the saved JSON file
+        val requestJsonContent = File("request.json").readText()
 
         // Make the POST request
         val response = client.post()
-            .body(BodyInserters.fromValue(jsonData))
+            .body(BodyInserters.fromValue(requestJsonContent))
             .retrieve()
             .bodyToMono(String::class.java)
             .block()
