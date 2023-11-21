@@ -4,6 +4,7 @@ import com.adventure.ocrpipeline.utils.Utils
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
+import reactor.core.publisher.Mono
 import java.io.File
 
 @Service
@@ -24,19 +25,18 @@ class TextExtractor(
         val requestJsonContent = File("request.json").readText()
 
         // Make the POST request
-        val response = client.post()
+        val responseMono: Mono<String> = client.post()
             .body(BodyInserters.fromValue(requestJsonContent))
             .retrieve()
             .bodyToMono(String::class.java)
-            .block()
 
-        if (response != null) {
-            utils.encodeAndSaveFile(pdfFile, "application/pdf")
+        responseMono.subscribe{response ->
+
+            if (response != null) {
+                utils.encodeAndSaveFile(pdfFile, "application/pdf")
+            }
+
+            utils.processAndLogResponse(response)
         }
-
-        utils.processAndLogResponse(response)
     }
-
-
-
 }

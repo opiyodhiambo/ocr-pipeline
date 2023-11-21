@@ -1,6 +1,7 @@
 package com.adventure.ocrpipeline.utils
 
 import com.adventure.ocrpipeline.service.JsonDataService
+import com.google.auth.oauth2.GoogleCredentials
 import org.springframework.stereotype.Component
 import java.io.File
 import java.util.*
@@ -9,9 +10,26 @@ import java.util.*
 class Utils(
     private val jsonDataService: JsonDataService
 ) {
-    fun getAccessToken(): String {
-        // Use the gcloud command to obtain the access token
-        return "ya29.a0AfB_byA8p5zvF65MWK17pHLbYOhey9RGQXbEL4_pjie7-azvWGO9q3-GfAqFpAEkiEhUl77-Gl4sIvo69yiWqrRD73nkqHLwJoRIVkuPOSesph23kPNA73XF266lepGpnuRuyF5AjntryXwvl1TxXRPKQORCwnbiGlO8E31vXhoaCgYKAVESARASFQHGX2Mi-KAcm3JO4TyWbzf-5juuKg0178"
+    fun fetchAccessToken(): String {
+        val credentialsJson = System.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+        if (credentialsJson.isNullOrBlank()){
+            println("Error: GOOGLE_APPLICATION_CREDENTIALS environment variable is not set")
+        }
+        try{
+            val credentials = GoogleCredentials.fromStream(credentialsJson.byteInputStream())
+            val accessToken = credentials.accessToken
+            if (accessToken != null){
+                return accessToken.tokenValue
+            } else{
+                println("Errror: Access token is null")
+
+            }
+
+        } catch (e: Exception) {
+            println("Error fetching access token: ${e.message}")
+
+        }
+        return ""
     }
     fun processAndLogResponse(response: String?) {
         if (response != null) {
