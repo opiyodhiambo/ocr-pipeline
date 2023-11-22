@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.bodyToFlux
+import org.springframework.web.reactive.function.client.bodyToMono
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.scheduler.Schedulers
 import java.io.File
+import java.util.Base64
 
 @Service
 class TextExtractor(
@@ -20,10 +24,10 @@ class TextExtractor(
 ) {
     private val logger = LoggerFactory.getLogger(TextExtractor::class.java)
     fun extractText(): Mono<String> {
-        val pdfFile = File("src/main/resources/A012203309Y.pdf")
+        val pdfFile = File("src/main/resources/7f67ff37-e91f-4c2b-b2d5-05b46b88ddc6.jpeg")
 
         // Encode and save the file
-        val mimeType = "application/pdf"
+        val mimeType = "image/jpeg"
 
         // Retrieve the content from the saved JSON object
         val jsonContent = utils.createRequestJson(pdfFile, mimeType)
@@ -32,11 +36,13 @@ class TextExtractor(
 
         // Make the POST request
         return client.post()
-            .uri("v1/projects/32694591112/locations/us/processors/5dcd993426673b7a/processorVersions/pretrained-ocr-v1.0-2020-09-23:process")
+            .uri("/5dcd993426673b7a:process")
             .body(BodyInserters.fromValue(jsonContent))
             .retrieve()
             .bodyToMono(String::class.java)
             .doOnSuccess{extractedText ->
+//                val decodedBytes: ByteArray = Base64.getDecoder().decode(extractedText)
+//                val decodedText: String = String(decodedBytes)
                 logger.info("Successfully extracted text: $extractedText")
             }
             .doOnError{error ->
