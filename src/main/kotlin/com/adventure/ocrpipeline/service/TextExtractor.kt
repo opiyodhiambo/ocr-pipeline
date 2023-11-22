@@ -1,5 +1,6 @@
 package com.adventure.ocrpipeline.service
 
+import com.adventure.ocrpipeline.model.DataModel
 import com.adventure.ocrpipeline.utils.Utils
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.LoggerFactory
@@ -31,8 +32,7 @@ class TextExtractor(
 
         // Retrieve the content from the saved JSON object
         val jsonContent = utils.createRequestJson(pdfFile, mimeType)
-        val jsonString = objectMapper.writeValueAsString(jsonContent)
-        logger.info(jsonString)
+        logger.info("Before making the request")
 
         // Make the POST request
         return client.post()
@@ -40,9 +40,13 @@ class TextExtractor(
             .body(BodyInserters.fromValue(jsonContent))
             .retrieve()
             .bodyToMono(String::class.java)
+            .flatMap { responseText ->
+                val extractedDocument = objectMapper.readValue(responseText, DataModel.ExtractedDocument::class.java)
+                val extractedText = extractedDocument.document.text
+                Mono.just(extractedText)
+            }
             .doOnSuccess{extractedText ->
-//                val decodedBytes: ByteArray = Base64.getDecoder().decode(extractedText)
-//                val decodedText: String = String(decodedBytes)
+//
                 logger.info("Successfully extracted text: $extractedText")
             }
             .doOnError{error ->
