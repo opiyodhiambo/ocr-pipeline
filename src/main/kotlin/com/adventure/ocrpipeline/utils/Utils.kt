@@ -13,56 +13,18 @@ import java.util.*
 class Utils(
     private val jsonDataService: JsonDataService
 ) {
-    fun fetchAccessToken(): String {
-        val credentialsJson = System.getenv("GCLOUD_ACCESS_TOKEN")
-        if (credentialsJson.isNullOrBlank()){
-            println("Error: GOOGLE_APPLICATION_CREDENTIALS environment variable is not set")
-        } else{
-            println("Variable value: $credentialsJson")
-        }
-        try{
-            val credentials = GoogleCredentials.fromStream(credentialsJson.byteInputStream())
-            val accessToken = credentials.accessToken
-            if (accessToken != null){
-                println("Successfully retrieved access token: $accessToken")
-                return accessToken.tokenValue
-            } else{
-                println("Error: Access token is null")
 
-            }
-
-        } catch (e: Exception) {
-            println("Error fetching access token: ${e.message}")
-
-        }
-        return ""
-//        try {
-//            val credentials = GoogleCredentials
-//                .fromStream( FileInputStream("/home/opiyo/Downloads/tajji-kyc-12a2b9d14772.json"))
-//                .createScoped(Collections.singletonList("https://www.googleapis.com/auth/cloud-platform"))
-//            credentials.refreshAccessToken()
-//            println(credentials.accessToken)
-//            val accessToken: AccessToken = credentials.accessToken
-//            println(accessToken.tokenValue)
-//            return accessToken.tokenValue
-//        } catch (e: Exception) {
-//            println("Error fetching access token: ${e.message}")
-//        }
-//         return ""
-
-    }
     fun processAndLogResponse(response: String?) {
+        val logger = LoggerFactory.getLogger(Utils::class.java)
         if (response != null) {
-            println("Response Content: $response")
+            logger.info("Response Content: $response")
         } else {
-            println("Error: Response is null.")
+            logger.info("Error: Response is null.")
         }
     }
     fun createRequestJson(file: File, mimetype: String): Map<String, Any> {
         val fileContent = file.readBytes()
         val base64Encoded = Base64.getEncoder().encodeToString(fileContent)
-        val logger = LoggerFactory.getLogger(Utils::class.java)
-        logger.info(base64Encoded)
         val jsonData =  mapOf(
             "skipHumanReview" to true,
             "rawDocument" to mapOf(

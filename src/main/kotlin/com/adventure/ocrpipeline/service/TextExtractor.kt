@@ -15,6 +15,7 @@ import reactor.core.publisher.Mono
 import reactor.core.scheduler.Schedulers
 import java.io.File
 import java.util.Base64
+import java.util.logging.Level
 
 @Service
 class TextExtractor(
@@ -47,12 +48,12 @@ class TextExtractor(
             }
             .doOnSuccess{extractedText ->
 //
-                logger.info("Successfully extracted text: $extractedText")
+                utils.processAndLogResponse(extractedText)
             }
             .doOnError{error ->
                 logger.error("Failed to extract text", error)
             }
-            .log()
+            .log("web-client", Level.FINE)
             .subscribeOn(Schedulers.immediate())
         }
     }
