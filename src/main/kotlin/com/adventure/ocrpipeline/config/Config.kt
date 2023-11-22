@@ -10,16 +10,18 @@ import org.springframework.web.reactive.function.client.WebClient
 
 @Configuration
 class Config(utils: Utils) {
-    @Value("\${google.cloud.api.endPointUrl}")
+    @Value("\${google.cloud.api.endpoint-url}")
     private final val endpointUrl: String? = null
     // Get the access token using the gcloud command
-    private final val accessToken = utils.fetchAccessToken()
-
+    @Value("\${google.cloud.access-token}")
+    private final val accessToken: String? = null
     @Bean
     // Set up WebClient
-    fun webClient() = WebClient.builder()
-        .baseUrl(endpointUrl!!)
-        .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer $accessToken")
-        .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-        .build()
+    fun webClient(): WebClient {
+        return WebClient.builder()
+            .baseUrl(endpointUrl!!)
+            .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer $accessToken")
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .build()
+    }
 }

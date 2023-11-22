@@ -2,5 +2,9 @@ server:
   port: 8080
 google:
   cloud:
+    access-token:
+      "ya29.a0AfB_byA-P6FUnoeWjEPy_6gEHYKvAiT-LKG0iXmfRDR6JrsP19Y55KWwb9BRfw1kYH1sEm2maO_i8VstWzw9ORiSwKnNhOpcLMOa0glWJeRkImxwsGC3p-5d5d4vpTA-wTtUfDioh9GWeyLS0EnX3oNqqs2hx7-9CHH-xgaCgYKAc8SARASFQHGX2MiWUi3luLNE6h9hA7IyD43vQ0173"
     api:
-      endPointUrl: "https://us-documentai.googleapis.com/v1/projects/32694591112/locations/us/processors/858e10cb5834b53a:process"
+      endpoint-url:
+        "https://us-documentai.googleapis.com"
+
