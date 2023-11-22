@@ -27,13 +27,10 @@ class TextExtractor(
     private val logger = LoggerFactory.getLogger(TextExtractor::class.java)
     fun extractText(): Mono<String> {
         val pdfFile = File("src/main/resources/7f67ff37-e91f-4c2b-b2d5-05b46b88ddc6.jpeg")
-
-        // Encode and save the file
         val mimeType = "image/jpeg"
 
         // Retrieve the content from the saved JSON object
         val jsonContent = utils.createRequestJson(pdfFile, mimeType)
-        logger.info("Before making the request")
 
         // Make the POST request
         return client.post()
