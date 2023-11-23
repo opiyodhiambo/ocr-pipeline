@@ -1,8 +1,12 @@
 package com.adventure.ocrpipeline.service
 
 import com.adventure.ocrpipeline.model.DataModel
+import com.adventure.ocrpipeline.model.DataModel.Document
 import com.adventure.ocrpipeline.utils.Utils
+import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.node.JsonNodeFactory
+import com.google.api.client.json.Json
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -26,32 +30,26 @@ class TextExtractor(
 ) {
     private val logger = LoggerFactory.getLogger(TextExtractor::class.java)
     fun extractText(): Mono<String> {
-        val pdfFile = File("src/main/resources/7f67ff37-e91f-4c2b-b2d5-05b46b88ddc6.jpeg")
+        val pdfFile = File("src/main/resources/b0c8e19d-ccca-4921-bf45-4819afeae148.jpeg")
         val mimeType = "image/jpeg"
 
         // Retrieve the content from the saved JSON object
         val jsonContent = utils.createRequestJson(pdfFile, mimeType)
 
-        // Make the POST request
         return client.post()
             .uri("/5dcd993426673b7a:process")
             .body(BodyInserters.fromValue(jsonContent))
             .retrieve()
-            .bodyToMono(String::class.java)
-            .flatMap { responseText ->
-                val extractedDocument = objectMapper.readValue(responseText, DataModel.ExtractedDocument::class.java)
-                val extractedText = extractedDocument.document.text
-                Mono.just(extractedText)
+            .bodyToMono(JsonNode::class.java)
+            .flatMap { node -> Mono.just(node.get("document").get("text").asText()) }
+            .doOnSuccess { textNode ->
+                utils.processAndLogResponse(textNode)
             }
-            .doOnSuccess{extractedText ->
-//
-                utils.processAndLogResponse(extractedText)
-            }
-            .doOnError{error ->
+            .doOnError { error ->
                 logger.error("Failed to extract text", error)
             }
             .log("web-client", Level.FINE)
             .subscribeOn(Schedulers.immediate())
-        }
+        // Make the POST request
+            }
     }
-

@@ -31,5 +31,6 @@ class Config(utils: Utils) {
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .exchangeStrategies(strategies)
             .build()
+
     }
 }

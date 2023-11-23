@@ -14,7 +14,7 @@ class Utils(
     private val jsonDataService: JsonDataService
 ) {
 
-    fun processAndLogResponse(response: String?) {
+    fun processAndLogResponse(response: Any?) {
         val logger = LoggerFactory.getLogger(Utils::class.java)
         if (response != null) {
             logger.info("Response Content: $response")
