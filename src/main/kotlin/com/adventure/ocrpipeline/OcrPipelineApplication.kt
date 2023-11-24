@@ -13,7 +13,7 @@ class OcrPipelineApplication(
 
 	override fun run(vararg args: String?) {
 		// Run the text extraction process
-		ocrService.getData().subscribe()
+		ocrService.classify().subscribe()
 		Thread.sleep(1000)
 	}
 }
