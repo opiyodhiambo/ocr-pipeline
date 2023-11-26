@@ -13,7 +13,7 @@ google:
 
 digital-ocean:
   access-key: "ACCESS_KEY"
-  secret-key: "SECRET_KEY"
+  secret-key: "SECRET-KEY"
   region: "ams3"
   end-point: "https://ams3.digitaloceanspaces.com"
   bucket-name: "tajji-kyc-documentation-bucket"

@@ -28,4 +28,7 @@ class OCRService(
             mimeType = "application/pdf"
         )
     }
+    fun download(){
+        return s3Service.downloadDocument("KE-KRA-PIN-CERTIFICATE/A012203309Y.pdf")
+    }
 }
