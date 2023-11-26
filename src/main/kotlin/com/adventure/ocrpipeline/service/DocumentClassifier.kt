@@ -19,7 +19,7 @@ class DocumentClassifier(
 ) {
     private val logger = LoggerFactory.getLogger(DocumentClassifier::class.java)
     fun classifyDocument(): Mono<String> {
-        val file = File("src/main/resources/b0c8e19d-ccca-4921-bf45-4819afeae148.jpeg")
+        val file = File("src/main/resources/A012203309Y.pdf")
         val mimeType = "application/pdf"
 
         // Retrieving the Json object
@@ -30,9 +30,6 @@ class DocumentClassifier(
             .body(BodyInserters.fromValue(jsonContent))
             .retrieve()
             .bodyToMono(String::class.java)
-            .flatMap { response ->
-                Mono.just(response)
-            }
             .doOnSuccess { validity ->
                 utils.processAndLogResponse(validity)
             }

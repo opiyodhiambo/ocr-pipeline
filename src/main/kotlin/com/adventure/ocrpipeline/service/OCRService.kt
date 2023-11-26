@@ -1,5 +1,6 @@
 package com.adventure.ocrpipeline.service
 
+import com.fasterxml.jackson.databind.JsonNode
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono

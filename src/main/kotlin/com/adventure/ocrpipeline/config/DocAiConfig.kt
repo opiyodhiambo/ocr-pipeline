@@ -1,6 +1,5 @@
 package com.adventure.ocrpipeline.config
 
-import com.adventure.ocrpipeline.utils.Utils
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -10,7 +9,7 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies
 import org.springframework.web.reactive.function.client.WebClient
 
 @Configuration
-class Config(utils: Utils) {
+class DocAiConfig() {
     @Value("\${google.cloud.api.base-url}")
     private final val baseUrl: String? = null
     // Get the access token using the gcloud command
