@@ -6,14 +6,14 @@ spring:
 google:
   cloud:
     access-token:
-      "ya29.c.c0AY_VpZjYPvqBdkI55ifZnQhm1HNSJiNbh6rg-N241h-FHIXjN0bwQqRACSmBvnNGcm9Tf135H60nSRf3zcMg-wSlIobExNBJ_MC9AV4P1QjCMl5VVTNT1gfgP5FcVUMjyCQPtdk8K00AHwgaL166x-2jI2XWuadp-aXMWzA2oSkKZ1ufUY4GcS_R-zZXTIKow3jNSRXIiGf5GAXV1lzaB4K3LDtVs0hYHCvgHRnOiGdackfYwRrbTLigR6jwDyu4OuFQMPq04DDNoLXX2feKO3ipVJOOGyX9Ng_1Hg1IAJzNZU3a7JtQGLLDFS4hzQCPSVT5Zt_fVyQfq0hX2YNpPvJeLFli9jhoZks7S-zeQWa04w8txWU0tfMN384DY7F3pjqs0sfluln52z_Srxp7pl4RQW8VnJ5UjQidYhhMFqwwcf922jy_BbitZhVZWz3t0aWxo0Qpzrrq7Uxw-vJ-vlIfgz5_QInt2S7ng5fbhkeZwh99-f18aUkuO9-2mQ8jcc16J1yisJjIgFr_MjhbRRekugvFemMIni7F1ycZxyjXtu8uoJzw9-21_c2rSec5iqq3j3bUgpdqU0ncgX43pFt5SMsS7XBB_dZIR04rgSk7uloq2_6V5kptm-cR00-m7bVzk82t7qv-mBguMVpJo6Ilu8blcWWJ7-J7Mst26bspYZ2hwUel1FeiJhQXcZyryk3Io5i7M5V__7YRu9bkS74RypeQS--o5zSSiSn54bpjR94x_1rylnkxk3FSkj-lX7Z9nkhpQBwSFjBtBvWIwzox_9es96-mor17zwV-pmBozW1iRtcFlwpgQ75IJdaSBhb2Vo_8xmSb7jipYWSfonao4MaudiXkiXRjk60yeM48xrnS2yW3YekOovrzBl3d13uMU1BOOupuUk_Qd2sqmv8-g_W_hyUcgquOebuUMuj0I_O4IXsqfjjxaFuex5aSVgZQlM5uJUVr6lsMeUZmgOc1m7yvUqb_eSJcYs5lfxw6_ryv-qMioiJ"
+      "ACCESS_TOKEN"
     api:
       base-url:
         "https://us-documentai.googleapis.com/v1/projects/32694591112/locations/us/processors"
 
 digital-ocean:
-  access-key: "DO00B72CQFRJBBTZQAR7"
-  secret-key: "VvJlDkEcgdKYhdyFFnvDERIm3OvyvLEb+oDi3yoyjqk"
+  access-key: "ACCESS_KEY"
+  secret-key: "SECRET_KEY"
   region: "ams3"
   end-point: "https://ams3.digitaloceanspaces.com"
   bucket-name: "tajji-kyc-documentation-bucket"
