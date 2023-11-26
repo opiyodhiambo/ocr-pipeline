@@ -34,3 +34,5 @@ class S3Config {
 
     }
 }
+
+//https://tajji-kyc-documentation-bucket.ams3.digitaloceanspaces.com/KE-KRA-PIN-CERTIFICATE/A012203309Y.pdf
