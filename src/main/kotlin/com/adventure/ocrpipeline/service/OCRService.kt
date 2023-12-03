@@ -14,10 +14,10 @@ class OCRService(
     private val documentClassifier: DocumentClassifier,
     private val s3Service: S3Service
 ) {
-    fun getData(): Mono<Map<String, Any>> {
-        val text = textExtractor.extractText()
-        return detailsParser.parseTaxDetails(text)
-    }
+//    fun getData(): Mono<Map<String, Any>> {
+//        val text = textExtractor.extractText()
+//        return detailsParser.parseTaxDetails(text)
+//    }
     fun classify(): Mono<String> {
         return documentClassifier.classifyDocument()
     }
@@ -31,4 +31,15 @@ class OCRService(
     fun download(){
         return s3Service.downloadDocument("KE-KRA-PIN-CERTIFICATE/A012203309Y.pdf")
     }
+    fun getIdBack(): Mono<Map<String, Any>> {
+        val extractedText = textExtractor.extractIdBack()
+        return detailsParser.parseIdBack(extractedText)
+    }
+    fun getIdFront(): Mono<String> {
+        return textExtractor.extractIdFront()
+    }
+    fun getPinCert(): Mono<String> {
+        return textExtractor.extractPinCert()
+    }
 }
+

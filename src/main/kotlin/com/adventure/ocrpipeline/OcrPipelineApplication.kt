@@ -15,7 +15,7 @@ class OcrPipelineApplication(
 		// Run the text extraction process
 //		ocrService.classify().subscribe()
 //		Thread.sleep(1000)
-		ocrService.download()
+		ocrService.getIdBack().subscribe()
 	}
 }
 

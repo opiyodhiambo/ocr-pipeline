@@ -6,14 +6,14 @@ spring:
 google:
   cloud:
     access-token:
-      "ACCESS_TOKEN"
+      "ya29.a0AfB_byDJOSpgcxMW723ANHEnPPhwYaRz6QotHRmvVxVrk-f6QyBO3_tfhF5T7VK3g4yXZrE5-o5xBPH3rZtxCKu62gstoTgSn-4pN-K_aRXINmpHKzQbTvHZ7OAeDx-SZ7sS9ERAt5rF4MKWfjaJV7q8uTeRmmweYGl2RwaCgYKAQwSARASFQHGX2Miq_mQjCsPsyp0OMk2G_5QAw0173"
     api:
       base-url:
-        "https://us-documentai.googleapis.com/v1/projects/32694591112/locations/us/processors"
+        "https://eu-documentai.googleapis.com/v1/projects/32694591112/locations/eu/processors"
 
 digital-ocean:
   access-key: "ACCESS_KEY"
-  secret-key: "SECRET-KEY"
+  secret-key: "SECRET_KEY"
   region: "ams3"
   end-point: "https://ams3.digitaloceanspaces.com"
   bucket-name: "tajji-kyc-documentation-bucket"

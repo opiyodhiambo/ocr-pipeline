@@ -19,6 +19,7 @@ class S3Service(private val digitalOceanClient: AmazonS3) {
     @Value("\${digital-ocean.bucket-name}")
     private val bucketName: String? = null
 
+
     fun uploadDocument(file: File, key: String, mimeType: String): PutObjectResult {
         val content = file.readBytes()
 //        val metadata = ObjectMetadata().apply {
@@ -31,7 +32,6 @@ class S3Service(private val digitalOceanClient: AmazonS3) {
             file
         )
     }
-
 
     fun downloadDocument(keyName: String) {
         val document: S3Object = digitalOceanClient.getObject(bucketName, keyName)
