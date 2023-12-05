@@ -1,6 +1,7 @@
 package com.adventure.ocrpipeline.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import java.time.LocalDate
 
 
 class DataModel {
@@ -22,5 +23,29 @@ class DataModel {
         val bucket: String,
         val folder: String,
         val documentName: String
+    )
+    data class NationalIdData(
+        val idNumber : String,
+        val serialNumber : String,
+        val firstName : String,
+        val middleName : String,
+        val lastName : String,
+        val districtOfBirth : String,
+        val placeOfIssue : String,
+        val dateOfIssue : String,
+        val dateOfBirth : String,
+        val sex : Gender,
+        val nationality : Nationality
+    )
+    enum class Gender(val value: String){
+        UNDEFINED("UNDEFINED"),
+        MALE("MALE"),
+        FEMALE("FEMALE")
+    }
+    enum class Nationality(val value: String){
+        KE("KE")
+    }
+    data class DocumentExtracted(
+        val data: NationalIdData
     )
 }
