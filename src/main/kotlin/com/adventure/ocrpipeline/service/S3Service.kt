@@ -1,51 +1,50 @@
 package com.adventure.ocrpipeline.service
 
-import com.amazonaws.services.s3.AmazonS3
-import com.amazonaws.services.s3.model.ObjectMetadata
-import com.amazonaws.services.s3.model.PutObjectRequest
-import com.amazonaws.services.s3.model.PutObjectResult
-import com.amazonaws.services.s3.model.S3Object
-import com.amazonaws.services.s3.model.S3ObjectInputStream
-import org.springframework.beans.factory.annotation.Autowired
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import org.springframework.web.reactive.function.BodyInserters
-import java.io.File
-import java.io.FileOutputStream
+import reactor.core.publisher.Mono
+import reactor.core.scheduler.Schedulers
+import software.amazon.awssdk.core.async.AsyncResponseTransformer
+import software.amazon.awssdk.services.s3.S3AsyncClient
+import software.amazon.awssdk.services.s3.model.GetObjectRequest
+import software.amazon.awssdk.services.s3.model.NoSuchKeyException
 
 @Service
-class S3Service(private val digitalOceanClient: AmazonS3) {
+class S3Service(private val digitalOceanClient: S3AsyncClient) {
 
     @Value("\${digital-ocean.bucket-name}")
     private val bucketName: String? = null
-
-
-    fun uploadDocument(file: File, key: String, mimeType: String): PutObjectResult {
-        val content = file.readBytes()
-//        val metadata = ObjectMetadata().apply {
-//            contentType = mimeType
-//            contentLength = content.size.toLong()
-//        }
-        return digitalOceanClient.putObject(
-            bucketName,
-            key,
-            file
-        )
+    companion object{
+        var log = LoggerFactory.getLogger(this::class.java)
     }
+    fun downloadDocument(folderName: String, fileName: String): Mono<ByteArray> {
+        log.info("Downloading Document")
+        val keyName = "$folderName/$fileName"
+        val getObjectRequest = GetObjectRequest.builder()
+            .bucket(bucketName)
+            .key(keyName)
+            .build()
+        log.info("getObjectRequested: $getObjectRequest")
+        return Mono.create { sink ->
+            log.info("Starting S3 download operation...")
+            digitalOceanClient.getObject(getObjectRequest, AsyncResponseTransformer.toBytes())
+                .whenComplete { response, error ->
+                    if (error != null) {
+                        if (error is NoSuchKeyException) {
+                            log.error("NoSuchKeyException: Object not found. Key: $keyName", error)
+                        } else {
+                            log.error("Error during S3 download operation", error)
+                        }
+                        sink.error(error)
+                    } else {
+                        val content = response.asByteArray()
+                        sink.success(content)
+                    }
+                }
+            }
+            .publishOn(Schedulers.boundedElastic())
 
-    fun downloadDocument(keyName: String) {
-        val document: S3Object = digitalOceanClient.getObject(bucketName, keyName)
-        val localFile = File("src/main/resources/new.pdf")
-        val inputStream: S3ObjectInputStream = document.objectContent
-        val outputStream = FileOutputStream(localFile)
-
-        val readBuf = ByteArray(1024)
-        var readLen: Int
-        while (inputStream.read(readBuf).also { readLen = it } > 0) {
-            outputStream.write(readBuf, 0, readLen)
         }
     }
-}
-//
-//https://tajji-kyc-documentation-bucket.ams3.digitaloceanspaces.com
-//https://tajji-kyc-documentation-bucket.ams3.digitaloceanspaces.com/KE-KRA-PIN-CERTIFICATE/A012203309Y.pdf
+

@@ -18,8 +18,8 @@ class DocumentClassifier(
     private val client: WebClient
 ) {
     private val logger = LoggerFactory.getLogger(DocumentClassifier::class.java)
-    fun classifyDocument(): Mono<String> {
-        val file = File("src/main/resources/A012203309Y.pdf")
+    fun classifyDocument(file: Mono<ByteArray>): Mono<String> {
+//        val file = File("src/main/resources/data/PinCert.pdf")
         val mimeType = "application/pdf"
 
         // Retrieving the Json object
@@ -29,9 +29,14 @@ class DocumentClassifier(
             .uri("/858e10cb5834b53a:process")
             .body(BodyInserters.fromValue(jsonContent))
             .retrieve()
-            .bodyToMono(String::class.java)
+            .bodyToMono(JsonNode::class.java)
+            .flatMap { node ->
+                val entities = node.get("document").get("entities")
+                val entityWithMaxConfidence = entities.maxByOrNull { it["confidence"].asDouble() }
+                val entityType = entityWithMaxConfidence?.get("type")?.asText()?: "unknown"
+                Mono.just(entityType) }
             .doOnSuccess { validity ->
-                utils.processAndLogResponse(validity)
+                utils.processAndLogResponse("Classified as $validity")
             }
             .doOnError { error ->
                 logger.error("Failed to classify text", error)

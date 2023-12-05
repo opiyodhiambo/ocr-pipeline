@@ -5,6 +5,7 @@ import com.adventure.ocrpipeline.service.TextExtractor
 import com.google.auth.oauth2.GoogleCredentials
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import reactor.core.publisher.Mono
 import java.io.File
 import java.io.FileInputStream
 import java.util.*
@@ -22,18 +23,17 @@ class Utils(
             logger.info("Error: Response is null.")
         }
     }
-    fun createRequestJson(file: File, mimetype: String): Map<String, Any> {
-        val fileContent = file.readBytes()
-        val base64Encoded = Base64.getEncoder().encodeToString(fileContent)
-        val jsonData =  mapOf(
-            "skipHumanReview" to true,
-            "rawDocument" to mapOf(
-                "mimeType" to mimetype,
-                "content" to base64Encoded
+    fun createRequestJson(file: Mono<ByteArray>, mimetype: String): Mono<Map<String, Any>> {
+        return file.map { byteArray ->
+            val base64Encoded = Base64.getEncoder().encodeToString(byteArray)
+            mapOf(
+                "skipHumanReview" to true,
+                "rawDocument" to mapOf(
+                    "mimeType" to mimetype,
+                    "content" to base64Encoded
+                )
             )
-        )
-        jsonDataService.saveData(jsonData)
-        return jsonData
+        }
     }
 
 }

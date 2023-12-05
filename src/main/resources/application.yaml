@@ -1,19 +1,29 @@
 server:
   port: 8080
 spring:
+  application:
+    name: OCR-PIPELINE
   codec:
     max-in-memory-size: 3MB
+axon:
+  axon-server:
+    servers: localhost:8124
+  serializer:
+    events: jackson
+    general: jackson
+    messages: jackson
+
 google:
   cloud:
     access-token:
-      "ya29.a0AfB_byDJOSpgcxMW723ANHEnPPhwYaRz6QotHRmvVxVrk-f6QyBO3_tfhF5T7VK3g4yXZrE5-o5xBPH3rZtxCKu62gstoTgSn-4pN-K_aRXINmpHKzQbTvHZ7OAeDx-SZ7sS9ERAt5rF4MKWfjaJV7q8uTeRmmweYGl2RwaCgYKAQwSARASFQHGX2Miq_mQjCsPsyp0OMk2G_5QAw0173"
+      "ya29.a0AfB_byA_pRX3S2nj6Vu4FTKv7yyoWbF-A-VTbOiUkatkpmY1o15Ipyt0zU_TBf22mQ3g0_GGHRU2jUhKgMbapCf16CmshXTOo8ceq_tkWaCBfcVx367P5KD7u8-7sHV51UyXdRwrQwCTk4NmhFEtfrVzW8BSajJF7b7yggaCgYKAaQSARASFQHGX2MivTEI18aYGrI9jqP1OH7Z8g0173"
     api:
       base-url:
-        "https://eu-documentai.googleapis.com/v1/projects/32694591112/locations/eu/processors"
+        "https://us-documentai.googleapis.com/v1/projects/32694591112/locations/us/processors"
 
 digital-ocean:
-  access-key: "ACCESS_KEY"
   secret-key: "SECRET_KEY"
+  access-key: "ACCESS_KEY"
   region: "ams3"
   end-point: "https://ams3.digitaloceanspaces.com"
   bucket-name: "tajji-kyc-documentation-bucket"

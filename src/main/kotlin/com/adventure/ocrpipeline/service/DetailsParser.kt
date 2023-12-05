@@ -28,7 +28,11 @@ class DetailsParser(
                 .subscribeOn(Schedulers.immediate())
         }
     }
-    
+//    fun parseIdFront(text: Mono<JsonNode>): Mono<Map<String, Any>> {
+//        return text.flatMap { entitiesNode ->
+//            val parsedM
+//        }
+//    }
     private fun parseJsonNodeToMap(jsonNode: JsonNode): Map<String, Any> {
         val objectMapper = jacksonObjectMapper()
         val valueTypeRef = object : TypeReference<List<Map<String, Any>>>() {}

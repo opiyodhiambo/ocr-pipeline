@@ -1,7 +1,7 @@
 package com.adventure.ocrpipeline.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.google.api.client.json.Json
+
 
 class DataModel {
     data class ExtractedDocument(
@@ -14,5 +14,13 @@ class DataModel {
     data class DocumentDetails(
         val serialNumber: String,
         val fullName: String
+    )
+    data class OCRRequested(
+        val nationalIdData: DocumentData
+    )
+    data class DocumentData(
+        val bucket: String,
+        val folder: String,
+        val documentName: String
     )
 }
