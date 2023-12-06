@@ -16,7 +16,7 @@ axon:
 google:
   cloud:
     access-token:
-      "ya29.a0AfB_byDM7ys_Zt2bzEYqL4SJyJCXbGEAEK-37Tljj6pobh_fPql8DnJNnoMwGFx0HuAVh9FLE-Ro5hoiqME38LPT6GOXO6_IGWn099J1AjErZXKuJ0-Ofh_lA3T5IhNkB05P0vz3sDnR0u5MMjElumGCG8xyMn0GwcBACwaCgYKAWwSARASFQHGX2Mi7Hc0V6GTFu6cT-yHIN8n_g0173"
+      "ya29.a0AfB_byCX_Sp9bATCoWt-LhMU8-7sKsXraAEfeYqdt-8dyI7uTLGIVilpkeIL_fKiCqa1X4vjCCUFP0q7y7_gt9uVV1GAzFNuN3E8dFBr3L3JjZ4_nFJjaLXbkhWK0VhPu6lgs6e3-rxwJdva6nLXTMgmQIPwIUCvuRSU1gaCgYKAVYSARASFQHGX2Mi2n9ZTsTtyCVditjfmE32Sg0173"
     api:
       base-url:
         "https://us-documentai.googleapis.com/v1/projects/32694591112/locations/us/processors"

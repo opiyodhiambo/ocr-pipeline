@@ -19,7 +19,15 @@
 		<s3-sdk.version>2.21.37</s3-sdk.version>
 		<axon-starter.version>4.9.0</axon-starter.version>
 		<axon-reactor.version>4.9.0</axon-reactor.version>
+		<akka.version>2.9.0</akka.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>akka-repository</id>
+			<name>Akka library repository</name>
+			<url>https://repo.akka.io/maven</url>
+		</repository>
+	</repositories>
 	<dependencies>
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.boot</groupId>-->
@@ -88,14 +96,14 @@
 			<artifactId>google-auth-library-oauth2-http</artifactId>
 			<version>1.19.0</version>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>com.amazonaws</groupId>-->
-<!--			<artifactId>aws-java-sdk-s3</artifactId>-->
-<!--			<version>${s3-sdk.version}</version>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.typesafe.akka</groupId>
+			<artifactId>akka-actor-typed_2.13</artifactId>
+			<version>${akka.version}</version>
 		</dependency>
 	</dependencies>
 	<build>

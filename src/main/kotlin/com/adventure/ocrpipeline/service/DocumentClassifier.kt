@@ -1,5 +1,7 @@
 package com.adventure.ocrpipeline.service
 
+import com.adventure.ocrpipeline.model.DataModel
+import com.adventure.ocrpipeline.model.DataModel.OCRRequested
 import com.adventure.ocrpipeline.utils.Utils
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
@@ -15,34 +17,36 @@ import java.io.File
 @Service
 class DocumentClassifier(
     private val utils: Utils,
-    private val client: WebClient
+    private val client: WebClient,
+    private val s3Service: S3Service
 ) {
     private val logger = LoggerFactory.getLogger(DocumentClassifier::class.java)
-    fun classifyDocument(file: Mono<ByteArray>): Mono<String> {
-//        val file = File("src/main/resources/data/PinCert.pdf")
-        val mimeType = "application/pdf"
-
-        // Retrieving the Json object
-        val jsonContent = utils.createRequestJson(file, mimeType)
-
-        return client.post()
-            .uri("/858e10cb5834b53a:process")
-            .body(BodyInserters.fromValue(jsonContent))
-            .retrieve()
-            .bodyToMono(JsonNode::class.java)
-            .flatMap { node ->
-                val entities = node.get("document").get("entities")
-                val entityWithMaxConfidence = entities.maxByOrNull { it["confidence"].asDouble() }
-                val entityType = entityWithMaxConfidence?.get("type")?.asText()?: "unknown"
-                Mono.just(entityType) }
-            .doOnSuccess { validity ->
-                utils.processAndLogResponse("Classified as $validity")
+    private val mimeType = "image/jpeg"
+    fun extractClass(event: OCRRequested): Mono<JsonNode> {
+        logger.info("Classifying the document")
+        val fileMono = s3Service.downloadDocument(
+            event.nationalIdData.folder,
+            event.nationalIdData.documentName
+        )
+        return fileMono.flatMap { file ->
+            logger.info("Downloaded the document, $file")
+            val jsonContentMono = utils.createRequestJson(Mono.just(file), mimeType)
+            jsonContentMono.flatMap { jsonContent ->
+                client.post()
+                    .uri("/858e10cb5834b53a:process")
+                    .body(BodyInserters.fromValue(jsonContent))
+                    .retrieve()
+                    .bodyToMono(JsonNode::class.java)
+                    .flatMap { node -> Mono.just(node.get("document").get("entities")) }
+                    .doOnSuccess { response ->
+                        utils.processAndLogResponse(response)
+                    }
+                    .doOnError { error ->
+                        logger.error("Failed to classifyText", error)
+                    }
+                    .log()
+                    .subscribeOn(Schedulers.immediate())
             }
-            .doOnError { error ->
-                logger.error("Failed to classify text", error)
-            }
-            .log()
-            .subscribeOn(Schedulers.immediate())
-
+        }
     }
 }

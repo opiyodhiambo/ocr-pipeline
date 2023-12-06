@@ -1,6 +1,8 @@
 package com.adventure.ocrpipeline.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.JsonNode
+import reactor.core.publisher.Mono
 import java.time.LocalDate
 
 
@@ -47,5 +49,8 @@ class DataModel {
     }
     data class DocumentExtracted(
         val data: NationalIdData
+    )
+    data class ExtractedText(
+        val text: Mono<JsonNode>
     )
 }

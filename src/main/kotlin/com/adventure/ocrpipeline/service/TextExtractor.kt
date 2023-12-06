@@ -26,8 +26,10 @@ class TextExtractor(
 
     fun extractIdFront(event: OCRRequested): Mono<JsonNode> {
         logger.info("Extracting OCRRequested event")
-        val documentMono = s3Service.downloadDocument(event.nationalIdData.folder,
-            event.nationalIdData.documentName)
+        val documentMono = s3Service.downloadDocument(
+            event.nationalIdData.folder,
+            event.nationalIdData.documentName
+        )
         return documentMono.flatMap { document ->
             logger.info("Downloaded document, $document")
             val jsonContentMono = utils.createRequestJson(Mono.just(document), imageMimeType)

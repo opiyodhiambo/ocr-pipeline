@@ -2,10 +2,12 @@ package com.adventure.ocrpipeline.utils
 
 import com.adventure.ocrpipeline.service.JsonDataService
 import com.adventure.ocrpipeline.service.TextExtractor
+import com.fasterxml.jackson.databind.JsonNode
 import com.google.auth.oauth2.GoogleCredentials
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
+import reactor.core.scheduler.Schedulers
 import java.io.File
 import java.io.FileInputStream
 import java.util.*
@@ -14,9 +16,8 @@ import java.util.*
 class Utils(
     private val jsonDataService: JsonDataService
 ) {
-
+    private val logger = LoggerFactory.getLogger(Utils::class.java)
     fun processAndLogResponse(response: Any?) {
-        val logger = LoggerFactory.getLogger(Utils::class.java)
         if (response != null) {
             logger.info("Response Content: $response")
         } else {
@@ -34,6 +35,27 @@ class Utils(
                 )
             )
         }
+    }
+    fun classifyDocument(jsonNode: Mono<JsonNode>): Mono<String>{
+        return jsonNode.flatMap { node ->
+            Mono.fromCallable {
+                val entities = node.elements()
+                var maxConfidence = 0.0
+                var highestConfidenceType = ""
+                while (entities.hasNext()) {
+                    val entity = entities.next()
+                    val confidence = entity["confidence"].asDouble()
+                    if (confidence > maxConfidence) {
+                        maxConfidence = confidence
+                        highestConfidenceType = entity["type"].asText()
+                    }
+                }
+                logger.info("the document is $highestConfidenceType")
+                highestConfidenceType
+            }
+                .subscribeOn(Schedulers.immediate())
+        }
+
     }
 
 }

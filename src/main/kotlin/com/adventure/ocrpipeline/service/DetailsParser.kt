@@ -22,7 +22,6 @@ class DetailsParser(
     fun parseIdFront(text: Mono<JsonNode>): Mono<NationalIdData> {
         return text.flatMap { entitiesNode ->
             val parsedMap = parseJsonNodeToMap(entitiesNode)
-//            utils.processAndLogResponse(parsedMap)
             val fullNameParts = parsedMap["full-names"].toString().split(" ")
             val idObject = NationalIdData(
                 idNumber = parsedMap["id-no"] as String,
