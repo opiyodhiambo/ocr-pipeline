@@ -19,16 +19,16 @@ class OCRService(
     private val documentClassifier: DocumentClassifier,
     private val utils: Utils
 ) {
-    fun getIdFront(event: OCRRequested): Mono<NationalIdData> {
-        val extractedText = textExtractor.extractIdFront(event)
-        return detailsParser.parseIdFront(extractedText)
-            .doOnSuccess { nationalIdData ->
-                val documentExtractedEvent = DocumentExtracted(data = nationalIdData)
-                eventBus.publish(GenericEventMessage.asEventMessage<DocumentExtracted>(documentExtractedEvent))
-            }
-    }
-    fun validateDocument(event: OCRRequested): Mono<String> {
-        val documentClass =  documentClassifier.extractClass(event)
-        return utils.classifyDocument(documentClass)
-    }
+//    fun getIdFront(event: OCRRequested): Mono<NationalIdData> {
+//        val extractedText = textExtractor.extractIdFront(event)
+//        return detailsParser.parseIdFront(extractedText)
+//            .doOnSuccess { nationalIdData ->
+//                val documentExtractedEvent = DocumentExtracted(data = nationalIdData)
+//                eventBus.publish(GenericEventMessage.asEventMessage<DocumentExtracted>(documentExtractedEvent))
+//            }
+//    }
+//    fun validateDocument(event: OCRRequested): Mono<String> {
+//        val documentClass =  documentClassifier.extractClass(event)
+//        return utils.classifyDocument(documentClass)
+//    }
 }
