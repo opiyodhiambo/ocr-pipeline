@@ -39,7 +39,7 @@ class DetailsParser(
                 nationality = DataModel.Nationality.KE
 
             )
-            utils.processAndLogResponse(idObject)
+//            utils.processAndLogResponse(idObject)
             Mono.just(idObject)
                 .subscribeOn(Schedulers.immediate())
         }

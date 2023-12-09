@@ -1,15 +1,12 @@
 package com.adventure.ocrpipeline.service
 
-import com.adventure.ocrpipeline.model.DataModel
+
 import com.adventure.ocrpipeline.model.DataModel.*
 import com.adventure.ocrpipeline.utils.Utils
-import com.fasterxml.jackson.databind.JsonNode
 import org.axonframework.eventhandling.EventBus
 import org.axonframework.eventhandling.GenericEventMessage
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import java.io.File
 
 @Service
 class OCRService(
@@ -31,7 +28,5 @@ class OCRService(
         val documentClass =  documentClassifier.extractClass(event)
         return utils.classifyDocument(documentClass)
     }
-    fun initializeActors(
 
-    )
 }

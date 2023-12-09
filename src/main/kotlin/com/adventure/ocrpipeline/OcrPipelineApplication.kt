@@ -27,3 +27,4 @@
 //fun main(args: Array<String>) {
 //	runApplication<OcrPipelineApplication>(*args)
 //}
+

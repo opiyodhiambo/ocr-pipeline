@@ -1,9 +1,9 @@
 package com.adventure.ocrpipeline.model
 
+import akka.actor.typed.ActorRef
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.JsonNode
 import reactor.core.publisher.Mono
-import java.time.LocalDate
 
 
 class DataModel {
@@ -11,6 +11,7 @@ class DataModel {
         @JsonProperty("document")
         val document: Document
     )
+
     data class Document(
         val text: String
     )
@@ -50,7 +51,5 @@ class DataModel {
     data class DocumentExtracted(
         val data: NationalIdData
     )
-    data class ExtractedText(
-        val text: Mono<JsonNode>
-    )
+
 }

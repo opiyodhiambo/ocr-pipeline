@@ -16,17 +16,15 @@ axon:
 google:
   cloud:
     access-token:
-      "ya29.a0AfB_byCX_Sp9bATCoWt-LhMU8-7sKsXraAEfeYqdt-8dyI7uTLGIVilpkeIL_fKiCqa1X4vjCCUFP0q7y7_gt9uVV1GAzFNuN3E8dFBr3L3JjZ4_nFJjaLXbkhWK0VhPu6lgs6e3-rxwJdva6nLXTMgmQIPwIUCvuRSU1gaCgYKAVYSARASFQHGX2Mi2n9ZTsTtyCVditjfmE32Sg0173"
+      "ya29.a0AfB_byB6wZYPOHvL9MkZ6WMHXI4izWo15ClxkHZgfXvZRmccVEWd3Lgxu50g62ToaKv5Vy0IivSzWK2JknlYdYJWGLKq0SSFo8Uj5pFuJLqxf1Hrwsur8PQmGlajnQyTuPRamqTAoq42f5u1ka4CDxqFP5SMeiiafUox6gaCgYKAdoSARASFQHGX2MisG6jVEnQSNv7Fx2et1l3pA0173"
     api:
       base-url:
         "https://us-documentai.googleapis.com/v1/projects/32694591112/locations/us/processors"
 
 digital-ocean:
-  secret-key: "SECRET_KEY"
-  access-key: "ACCESS_KEY"
+  secret-key: "CdJgS8+eXdMDtNfoO5rQS/1lMjUZLa9rkbwe0lh8W4E"
+  access-key: "DO00YJ2WUZJ98Q6QWKDG"
   region: "ams3"
   end-point: "https://ams3.digitaloceanspaces.com"
   bucket-name: "tajji-kyc-documentation-bucket"
-
-
 
