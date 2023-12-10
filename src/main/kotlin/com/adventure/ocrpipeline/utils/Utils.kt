@@ -1,21 +1,15 @@
 package com.adventure.ocrpipeline.utils
 
-import com.adventure.ocrpipeline.service.JsonDataService
-import com.adventure.ocrpipeline.service.TextExtractor
+
 import com.fasterxml.jackson.databind.JsonNode
-import com.google.auth.oauth2.GoogleCredentials
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import reactor.core.scheduler.Schedulers
-import java.io.File
-import java.io.FileInputStream
 import java.util.*
 
 @Component
-class Utils(
-    private val jsonDataService: JsonDataService
-) {
+class Utils() {
     private val logger = LoggerFactory.getLogger(Utils::class.java)
     fun processAndLogResponse(response: Any?) {
         if (response != null) {

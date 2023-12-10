@@ -33,7 +33,7 @@ class OCRController(
     private val eventBus: EventBus,
     private val actorSystem: ActorSystemInitializer
 
-    ) {
+) {
     companion object{
         var log = LoggerFactory.getLogger(OCRController::class.java)
 

@@ -25,9 +25,7 @@ class S3Service(private val digitalOceanClient: S3AsyncClient) {
             .bucket(bucketName)
             .key(keyName)
             .build()
-        log.info("getObjectRequested: $getObjectRequest")
         return Mono.create { sink ->
-            log.info("Starting S3 download operation...")
             digitalOceanClient.getObject(getObjectRequest, AsyncResponseTransformer.toBytes())
                 .whenComplete { response, error ->
                     if (error != null) {

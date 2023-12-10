@@ -22,8 +22,8 @@ google:
         "https://us-documentai.googleapis.com/v1/projects/32694591112/locations/us/processors"
 
 digital-ocean:
-  secret-key: "CdJgS8+eXdMDtNfoO5rQS/1lMjUZLa9rkbwe0lh8W4E"
-  access-key: "DO00YJ2WUZJ98Q6QWKDG"
+  secret-key: "SECRET_KEY"
+  access-key: "ACCESS_KEY"
   region: "ams3"
   end-point: "https://ams3.digitaloceanspaces.com"
   bucket-name: "tajji-kyc-documentation-bucket"
